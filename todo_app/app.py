@@ -5,6 +5,9 @@ from todo_app.data.session_items import get_items
 from todo_app.flask_config import Config
 from flask import request
 from werkzeug.utils import redirect
+import os
+os.getenv('TRELLOAPIKEY')
+os.getenv('TRELLOTOKEN')
 
 
 app = Flask(__name__)
