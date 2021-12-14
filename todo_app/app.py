@@ -1,21 +1,24 @@
 from flask import Flask
 from flask.templating import render_template
 from flask import session
+
 from todo_app.data.session_items import get_items
 from todo_app.flask_config import Config
 #from data.session_items import get_items
 #from flask_config import Config
+
 from flask import request
-from werkzeug.utils import redirect
+from flask import redirect
 import os
 import requests
-import json
+#import json
+
 
 ##import trello_items
 ##from trello_items import get_trelloitems
 
-os.getenv('TRELLOAPIKEY')
-os.getenv('TRELLOTOKEN')
+TAK = os.getenv('TRELLOAPIKEY')
+TT = os.getenv('TRELLOTOKEN')
 
 
 app = Flask(__name__)
@@ -26,13 +29,31 @@ def index():
     items = get_trelloitems()   
     return render_template('index.html', items=items)
     
-@app.route('/add', methods=['GET', 'POST'])
+
+def get_trelloitems():
+   # url="https://api.trello.com/1/actions/1/card"
+
+    aa={}
+
+    #url = f'https://api.trello.com/1/boards/{os.getenv("TRELLOBOARD")}/cards'
+    url = f'https://api.trello.com/b/boards/{"nGuc8fio"}'
+    #https://trello.com/b/nGuc8fio
+    aa = requests.get(url, params={'key': TAK, 'token': TT})
+ 
+    return aa.json.__dict__
+
+
+
+
+
+'''@app.route('/add', methods=['GET', 'POST'])
 def add():
     add_item(request.form.get('title'))
     #return render_template('index.html', items=items)
     return redirect('/')
+'''
 
-def add_item(title):
+'''def add_item(title):
     #kept getting session_items is not defined error - so just added it to the main app
     items = get_items()
 
@@ -46,17 +67,9 @@ def add_item(title):
     session['items'] = items
 
     return item
+'''
 
 
-def get_trelloitems():
-   # url="https://api.trello.com/1/actions/1/card"
-
-    aa= []
-
-    url = f'https://api.trello.com/1/boards/{os.getenv("BOARD_ID")}/cards'
-    aa = requests.get(url, params={'key': os.getenv('TRELLOKEY'), 'token': os.getenv('TRELLOTOKEN')}).json()
- 
-    return aa
     
     
 
