@@ -13,13 +13,12 @@ import os
 import requests
 #import json
 
-
 ##import trello_items
 ##from trello_items import get_trelloitems
 
 TAK = os.getenv('TRELLOAPIKEY')
 TT = os.getenv('TRELLOTOKEN')
-
+TB = os.getenv('TRELLOBOARD')
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -35,16 +34,17 @@ def get_trelloitems():
 
     aa={}
 
-    #url = f'https://api.trello.com/1/boards/{os.getenv("TRELLOBOARD")}/cards'
-    url = f'https://api.trello.com/b/boards/{"nGuc8fio"}'
-    #https://trello.com/b/nGuc8fio
+    url = f'https://api.trello.com/1/lists/{"To Do"}/cards' 
+    ##url = f'https://api.trello.com/1/boards/{id}/Shopping'
+    #url = f'https://api.trello.com/b/boards/{"nGuc8fio"}'
+
     aa = requests.get(url, params={'key': TAK, 'token': TT})
- 
+
     return aa.json.__dict__
+    
 
 
-
-
+    
 
 '''@app.route('/add', methods=['GET', 'POST'])
 def add():
